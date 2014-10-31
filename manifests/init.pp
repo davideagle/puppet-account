@@ -102,7 +102,7 @@ define account(
   $ssh_key_type = 'ssh-rsa', $groups = [], $ensure = present,
   $comment= "${title} Puppet-managed User", $gid = 'users', $allowdupe = false
 ) {
-
+  notify {"Running account code":}
   if $home_dir == undef {
     if $username == 'root' {
       case $::operatingsystem {

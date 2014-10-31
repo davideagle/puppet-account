@@ -138,10 +138,11 @@ define account(
         name    => $name,
         system  => $system,
     }
-
+    notify {"got groups  \$groups ":}
     case $ensure {
       present: {
         each($groups) |$value|{
+          notify {"got group  \$value ":}
           Group[$value] -> Group[$title]
         }
         Group[$title] -> User[$title]

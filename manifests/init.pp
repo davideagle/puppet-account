@@ -131,10 +131,21 @@ define account(
         system => $system,
         gid    => $uid,
     }
+    
+    auxgroup{
+      $name:
+        ensure  => present,
+        name    => $name,
+        system  => $system,
+    }
 
     case $ensure {
       present: {
+        each($groups) |$value|{
+          Auxgroup[$value]
+        }
         Group[$title] -> User[$title]
+        
       }
       absent: {
         User[$title] -> Group[$title]

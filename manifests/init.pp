@@ -142,7 +142,7 @@ define account(
     case $ensure {
       present: {
         each($groups) |$value|{
-          Auxgroup[$value] -> [$title]
+          Group[$value] -> Group[$title]
         }
         Group[$title] -> User[$title]
         

@@ -140,7 +140,7 @@ define account(
 
     case $ensure {
       present: {
-        Group['test'] -> Group[$title] -> User[$title]
+        Group['wheel'] -> Group[$title] -> User[$title]
       }
       absent: {
         User[$title] -> Group[$title]

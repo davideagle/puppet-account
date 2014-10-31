@@ -102,7 +102,6 @@ define account(
   $ssh_key_type = 'ssh-rsa', $groups = [], $ensure = present,
   $comment= "${title} Puppet-managed User", $gid = 'users', $allowdupe = false
 ) {
-  notice("this is notice. always visible")
   if $home_dir == undef {
     if $username == 'root' {
       case $::operatingsystem {
@@ -138,7 +137,7 @@ define account(
         name    => $name,
         system  => $system,
     }
-    notify {"got groups  \$groups ":}
+
     case $ensure {
       present: {
         Group[$title] -> User[$title]
@@ -153,6 +152,11 @@ define account(
     $primary_group = $gid
   }
 
+  define print() {
+    notice("The value is: '${name}'")
+  }
+ 
+  print{$groups: }
 
   case $ensure {
     present: {

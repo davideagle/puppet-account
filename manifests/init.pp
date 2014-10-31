@@ -140,7 +140,7 @@ define account(
 
     case $ensure {
       present: {
-        Group[$title] -> User[$title]
+        Group['test'] -> Group[$title] -> User[$title]
       }
       absent: {
         User[$title] -> Group[$title]
@@ -152,21 +152,12 @@ define account(
     $primary_group = $gid
   }
 
-  define print() {
-    notice("The value is: '${name}'")
-  }
- 
-  print{$groups: }
-
   case $ensure {
     present: {
       $dir_ensure = directory
       $dir_owner  = $username
       $dir_group  = $primary_group
-       each($groups) |$value|{
-          notify {"got group  \$value ":}
-          Group[$value] -> Group[$title]
-        }
+
       User[$title] -> File["${title}_home"] -> File["${title}_sshdir"]
     }
     absent: {
